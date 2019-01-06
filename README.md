@@ -1,1 +1,1 @@
-# baldir.fr
+# Default starter for Gridsome
