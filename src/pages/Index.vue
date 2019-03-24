@@ -1,12 +1,56 @@
 <template>
-  <Layout>
-    <g-image alt="Example image" src="~/favicon.png" width="135" />
-    <h1>Hello, world!</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur excepturi labore tempore expedita, et iste tenetur suscipit explicabo! Dolores, aperiam non officia eos quod asperiores</p>
-    <footer><a href="https://github.com/marc-bouvier/baldir.fr">baldir.fr sur GitHub</a></footer>
+  <Layout :show-logo="false">
+    <!-- Author intro -->
+    <Author :show-title="true" />
+    
+    <!-- List posts -->
+    <div class="posts">
+      <PostCard v-for="edge in $page.posts.edges" :key="edge.node.id" :post="edge.node"/>
+    </div>
+
   </Layout>
 </template>
 
+<page-query>
+{
+  posts: allPost {
+    edges {
+      node {
+        id
+        title
+        path
+        tags {
+          id
+          title
+          path
+        }
+        date (format: "D. MMMM YYYY")
+        timeToRead
+        description
+        published
+        coverImage (width: 770, height: 380, blur: 10)
+        ...on Post {
+            id
+            title
+            path
+        }
+      }
+    }
+  }
+}
+</page-query>
+
 <script>
-export default {}
+import Author from '~/components/Author.vue'
+import PostCard from '~/components/PostCard.vue'
+
+export default {
+  components: {
+    Author,
+    PostCard
+  },
+  metaInfo: {
+    title: 'Hello, world!'
+  }
+}
 </script>

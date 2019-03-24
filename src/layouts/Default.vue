@@ -1,42 +1,86 @@
 <template>
-  <div class="layout">
+  <div id="app">
+
     <header class="header">
-      <strong>
-        <g-link :to="{ name: 'home' }">Gridsome</g-link>
-      </strong>
-      <nav class="nav">
-        <g-link class="nav__link" :to="{ name: 'home' }">Home</g-link>
-        <g-link class="nav__link" :to="{ name: 'about' }">About</g-link>
-      </nav>
+      <div class="header__left">
+        <Logo v-if="showLogo" /> 
+      </div>
+      
+      <div class="header__right">        
+        <ToggleTheme />
+      </div>
     </header>
-    <slot/>
+
+    <main class="main">
+      <slot/>
+    </main>
+
+    <footer class="footer">
+      <span class="footer__copyright">baldir.fr {{ new Date().getFullYear() }}. </span>
+      <span class="footer__links">Powered by <a href="//gridsome.org"> Gridsome </a></span>
+      <span class="footer__links">Source code of this website is <a href="https://github.com/marc-bouvier/baldir.fr">available on github</a></span>
+    </footer>
+
   </div>
 </template>
 
-<style>
-body {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  margin:0;
-  padding:0;
-  line-height: 1.5;
-}
+<script>
+import Logo from '~/components/Logo.vue'
+import ToggleTheme from '~/components/ToggleTheme.vue'
 
-.layout {
-  max-width: 600px;
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
+export default {
+  props: {
+    showLogo: { default: true }
+  },
+  components: {
+    Logo,
+    ToggleTheme
+  }
 }
+</script>
 
+<style lang="scss">
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  height: 80px;
+  min-height: var(--header-height);
+  padding: 0 calc(var(--space) / 2);
+  top:0;
+  z-index: 10;
+
+  &__left,
+  &__right {
+    display: flex;
+    align-items: center;
+  }
+
+  @media screen and (min-width: 1300px) {
+    //Make header sticky for large screens
+    position: sticky;
+    width: 100%;
+  }
 }
 
-.nav__link {
-  margin-left: 20px;
+.main {
+  margin: 0 auto;
+  padding: 1.5vw 15px 0;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--space) / 2);
+  text-align: center;
+  font-size: .8em;
+
+  > span {
+    margin: 0 .35em;
+  }
+
+  a {
+    color: currentColor;
+  }
 }
 </style>
