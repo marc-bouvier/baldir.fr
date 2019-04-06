@@ -6,7 +6,10 @@
         <Logo v-if="showLogo" /> 
       </div>
       
-      <div class="header__right">        
+      <div class="header__right">
+        <g-link class="post-card__link" to="/tags">
+          Tags
+        </g-link>
         <ToggleTheme />
       </div>
     </header>
